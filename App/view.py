@@ -58,6 +58,7 @@ def print_menu():
     # TODO: Mods de Est-1, Est-2 y Est-3 en el Lab 2
     # Agregue la opción 3 para cargar los tags de los libros.
     # Pueede guiarse de las opciones 1 y 2.
+    print("3- Cargar BookTags")
     print("0- Salir")
 
 
@@ -96,7 +97,12 @@ def load_books_tags(app):
     :type app: logic
     """
     # TODO: Mods de Est-1, Est-2 y Est-3 en el Lab 2
-    pass
+    tf = os.path.join(data_dir, filename)
+    input_file = csv.DictReader(open(tf, encoding= "utf-8"))
+    catalog["model"] =create_book_tag_list(catalog["model"])
+    for booktag in input_file:
+        add_book_tag(catalog, booktag)
+    return book_tag_size(catalog)
 
 
 def first_book(app):
@@ -112,7 +118,7 @@ def last_book(app):
     """
     Devuelve el último libro cargado en el conjunto de libros
     """
-    pass
+    last = logic.last_book(app)
 
 
 # Se crea el controlador asociado a la vista
@@ -141,7 +147,8 @@ def main():
             first = None
 
             # TODO: Mods de Est-2 en el Lab 2
-            last = None
+            last = logic.last_book(app)
+            print("Último libro cargado:\n" +str(last) +"\n")
 
         elif int(inputs[0]) == 2:
             print("Cargando información de tags....")
